@@ -1,0 +1,24 @@
+<h1>Listing folders</h1>
+
+
+<%= form_tag(path_path, :method => "get") do %>
+    <%= label_tag(:q, "Set path :") %>
+    <%= text_field_tag(:q) %>
+    <%= submit_tag("Submit") %>
+    <% end %>
+
+
+
+
+</div>
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<%= render 'form' %>
+
+

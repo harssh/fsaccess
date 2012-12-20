@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @folder.name %>
+</p>
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+   <div class="list">
+  <% @files.each do |file| %>
+  <tr>
+  	<% if File.directory?(file)%>
+  	<td><%= file %></td>
+  <td><%= link_to 'Open Folder', file[/\/.*/] %></td>
+  	<% else %>
+    <td><%= file %></td>
+    <td><%= link_to 'Open', file[/\/.*/] %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+</div>
+
+
+<%= link_to 'Edit', edit_folder_path(@folder) %> |
+<%= link_to 'Back', folders_path %>
