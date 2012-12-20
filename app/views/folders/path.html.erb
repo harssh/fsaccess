@@ -9,7 +9,7 @@
 
 
 <div class="list">
-	
+	<% path("public/*")%>
   <% @files.each do |file| %>
   <tr>
   	<% if File.directory?(file)%>

@@ -4,14 +4,11 @@ class FoldersController < ApplicationController
   
   def index
    
-   
-    @files =  Dir["public/*"]  
-
-  
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @folders }
-    end
+      if params[:q] 
+    @files =  Dir["#{params[:q]}"]
+    render '_form'
+  end
+    
   end
 
   # GET /folders/1
