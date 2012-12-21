@@ -1,0 +1,18 @@
+<%= flash[:error] %>
+
+
+<h1>New folder</h1>
+
+<h2>Enter new folder path and name</h2>
+
+<%= form_tag new_folder_path , :method => 'get'  do %>
+    
+    <%= text_field_tag(:q,params[:q]) %>
+    <%= submit_tag("Submit", :name => nil) %>
+    <% end %>
+
+
+</div>
+
+
+<%= link_to 'Back', folders_path %>

@@ -9,4 +9,10 @@ module FoldersHelper
  
   end
   
+  def deld(pa1)
+    
+    FileUtils.rm_rf(pa1)
+    
+  end
+  
 end

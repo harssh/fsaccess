@@ -2,8 +2,14 @@ Filesys::Application.routes.draw do
   resources :buckets
 
  match '/path' , to: 'folders#path' 
+  match '/nf',    to: 'folders#nf'
+  match '/subflist', to: 'folders#subflist'
+  match '/deld', to: 'folders#deld'
+  match '/renam', to: 'folders#renam'
   
- resources :folders , only: [:new, :create, :destroy,:index,:show]
+  match '/newf', to: 'folders#newf'
+  
+ resources :folders , only: [:new, :create, :destroy,:index,:show,:nf]
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

@@ -1,5 +1,16 @@
 class FoldersController < ApplicationController
   
+  #Errno::EACCES in FoldersController#new 
+  rescue_from Errno::EACCES, :with => :error_render_method
+
+  def error_render_method
+    respond_to do |type|
+    # type.html { render :json => "Access Denied" }
+      type.all  { render :action => 'nf' }
+      flash[:error] = 'Access Denied Pls Change Path.'
+    end
+    true
+  end
   
   
   def index
@@ -29,12 +40,29 @@ class FoldersController < ApplicationController
   # GET /folders/new
   # GET /folders/new.json
   def new
-    @folder = Folder.new
+   # @folder = Folder.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @folder }
-    end
+ if params[:q] 
+ # begin
+  if FileUtils.mkdir_p("#{params[:q]}")
+        render '_nform'
+        flash[:error] = "Folder Created"
+        
+  #    else
+        
+   #     format.html { redirect_to nf_path, notice: 'Folder was successfully updated.' }
+    #    format.json { render json: @folder.errors, status: :unprocessable_entity }
+      
+     end
+     #  rescue   
+      #   render :action => 'nf' 
+      #flash[:error] = 'Access Denied Pls Change Path.'
+      #end
+ end
+   # respond_to do |format|
+    #  format.html # new.html.erb
+     # format.json { render json: @folder }
+    #end
   end
 
   # GET /folders/1/edit
@@ -48,7 +76,13 @@ class FoldersController < ApplicationController
     #@folder = Folder.new(params[:folder])
      
     # @files =  Dir[:folder]
-        @path = params[:folder]
+        if params[:q] 
+          FileUtils.mkdir_p("#{params[:q]}")
+        end
+     #@files =  Dir["#{params[:q]}"]
+     flash[:success] = "Folder Created"
+    render '_nform' 
+    
       end
 
   # PUT /folders/1
@@ -70,13 +104,12 @@ class FoldersController < ApplicationController
   # DELETE /folders/1
   # DELETE /folders/1.json
   def destroy
-    @folder = Folder.find(params[:id])
-    @folder.destroy
+#    @folder = Folder.find(params[:id])
+ #   @folder.destroy
 
-    respond_to do |format|
-      format.html { redirect_to folders_url }
-      format.json { head :no_content }
-    end
+      
+
+   
   end
   
   def path
@@ -89,4 +122,45 @@ class FoldersController < ApplicationController
   end
   
   
+  def nf
+       respond_to do |format|
+     format.html # nf.html.erb
+      format.json { render json: @folder }
+    end
+    
+  end
+  
+  def deld
+    
+    FileUtils.rm_rf(params[:fid])
+    
+    
+  end
+  
+  def renam
+    
+    pat = params[:fid].slice(0..(params[:fid].index('/')))
+    
+    FileUtils.mv(params[:fid],pat + params[:rn])
+    
+  end
+  
+  def newf
+    
+    if params[:q] 
+  if FileUtils.touch("#{params[:q]}")
+        render '_newfil'
+        flash[:error] = "Folder Created"
+     
+ end
+  end
+  end
+  
+  def subflist
+    
+    if params[:q] 
+    @files =  Dir["#{params[:q]}"]
+    render '_form'
+  end
+  end
 end
