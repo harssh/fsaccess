@@ -14,7 +14,7 @@
   	<% if File.directory?(file)%>
   	<td><%= file %></td>
   
-  <td> <%= button_to "Open Folder", {:controller => "folders", :action => 'subflist', :q => file } , :method => 'get' %> </td>
+  <td> <%= button_to "Open Folder", {:controller => "folders", :action => 'subflist', :q => file }  %> </td>
   
  <td> <%= button_to "Delete Folder", {:controller => "folders", :action => 'deld', :fid => file }, :confirm => "Are you sure ?", :method => :delete %> </td>
   

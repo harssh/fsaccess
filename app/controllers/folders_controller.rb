@@ -16,7 +16,7 @@ class FoldersController < ApplicationController
   def index
    
       if params[:q] 
-    @files =  Dir["#{params[:q]}"]
+    @files =  Dir["#{params[:q]}"+"/*"]
     render '_form'
   end
     
@@ -158,9 +158,19 @@ class FoldersController < ApplicationController
   
   def subflist
     
-    if params[:q] 
+   if params[:q] 
+    @files =  Dir["#{params[:q]}"+"/*"]
+    render '_sfsorm'
+    #redirect_to
+  end
+  end
+ 
+  def subf
+     #if params[:q] 
     @files =  Dir["#{params[:q]}"]
-    render '_form'
+ # end
   end
-  end
+  
+ 
+ 
 end
