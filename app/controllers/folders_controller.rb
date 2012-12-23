@@ -139,9 +139,9 @@ class FoldersController < ApplicationController
   
   def renam
     
-    pat = params[:fid].slice(0..(params[:fid].index('/')))
+    pat = params[:q].slice(0..(params[:q].index('/')))
     
-    FileUtils.mv(params[:fid],pat + params[:rn])
+    FileUtils.mv(params[:q],pat + params[:rn])
     
   end
   

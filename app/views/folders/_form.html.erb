@@ -20,7 +20,7 @@
   
  <td><%= form_tag renam_path   do %>
  	
-    <%= text_field_tag(:q,file) %>
+    <%= hidden_field_tag(:q,file) %>
     <%= text_field_tag(:rn) %>
     <%= submit_tag("Renam", :name => nil,:confirm => "Are you sure ?") %>
     <% end %></td>
