@@ -45,20 +45,7 @@ class FoldersController < ApplicationController
    
   end
   
-   # def subfolderlist # listing for subfolder
-     # @fpath = params[:fpath]
-#      
-     # if @fpath
-#      
-        # @files =  Dir["#{@fpath}"+"/*"]
-        # render '_form'
-#              
-     # else     
-       # redirect_to :back    
-#     
-     # end
-  # end
-    
+  
   
   def createfolder #calls new folder name input page
  @f_path =params[:fpath]
@@ -75,7 +62,7 @@ class FoldersController < ApplicationController
   end
 
  
-  def deldir #delete directory
+  def delete #delete directory
          @f_name = params[:fname]
          
    if Dir.rmdir(@f_name)

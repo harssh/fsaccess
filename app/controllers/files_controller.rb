@@ -17,7 +17,7 @@ class FilesController < ApplicationController
            
    end
     
-   def new_file1 # create new file
+   def create # create new file
      @fpath = params[:fpath]
      
      if @fpath
@@ -29,18 +29,18 @@ class FilesController < ApplicationController
     
      else
        flash[:notice] = "New File Not Created"
-       render 'new_file'
+       render 'create'
        
     end
   end
    
   
   
- def open_file1 #method called when file is opened
+ def show #method called when file is opened
    
  end
  
- def deletefile1 # delete file
+ def delete # delete file
    @f_name = params[:fname]
    
    if FileUtils.rm(@f_name)
