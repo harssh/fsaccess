@@ -1,3 +1,7 @@
+<h1><%= flash[:error] %></h1>
+<h1><%= flash[:success] %></h1>
+<h1><%= flash[:notice] %></h1>
+
 <h1>Listing folders</h1>
 <table>
   <tr>
@@ -14,34 +18,34 @@
   	<% if File.directory?(file)%>
   	<td><%= file %></td>
   
-  <td> <%= button_to "Open Folder", {:controller => "folders", :action => 'subflist', :q => file }  %> </td>
+  <td> <%= button_to "Open Folder", {:controller => "folders", :action => 'subfolderlist', :fpath => file }  %> </td>
   
- <td> <%= button_to "Delete Folder", {:controller => "folders", :action => 'deld', :fid => file }, :confirm => "Are you sure ?", :method => :delete %> </td>
+ <td> <%= button_to "Delete Folder", {:controller => "folders", :action => 'deldir', :fname => file }, :confirm => "Are you sure ?", :method => :delete %> </td>
   
- <td><%= form_tag renam_path   do %>
+ <td><%= form_tag rename_path   do %>
  	
-    <%= hidden_field_tag(:q,file) %>
-    <%= text_field_tag(:rn) %>
-    <%= submit_tag("Renam", :name => nil,:confirm => "Are you sure ?") %>
+    <%= hidden_field_tag(:fpath,file) %>
+    <%= text_field_tag(:newname) %>
+    <%= submit_tag("Rename", :name => nil,:confirm => "Are you sure ?") %>
     <% end %></td>
 
   	<% else %>
     <td><%= file %></td>
    
    
-   <td><%= form_tag opfile_path   do %>
+   <td><%= form_tag open_file_path   do %>
  	
-    <%= hidden_field_tag(:x,file) %>
-    
+    <%= hidden_field_tag(:flpath,file) %>    
     <%= submit_tag("Open", :name => nil) %>
     <% end %></td>
-    <td> <%= button_to "Delete File", {:controller => "folders", :action => 'deld', :fid => file }, :confirm => "Are you sure ?", :method => :delete %> </td>
     
-    <td><%= form_tag renam_path   do %>
+    <td> <%= button_to "Delete File", {:controller => "folders", :action => 'deletefile', :fname => file }, :confirm => "Are you sure ?", :method => :delete %> </td>
+    
+    <td><%= form_tag rename_path   do %>
  	
-    <%= hidden_field_tag(:q,file) %>
-    <%= text_field_tag(:rn) %>
-    <%= submit_tag("Renam", :name => nil,:confirm => "Are you sure ?") %>
+    <%= hidden_field_tag(:fpath,file) %>
+    <%= text_field_tag(:newname) %>
+    <%= submit_tag("Rename", :name => nil,:confirm => "Are you sure ?") %>
     <% end %></td>
     <% end %>
   </tr>
@@ -51,6 +55,6 @@
 <br />
 </div>
 
-<h3><%= link_to 'New Folder', nf_path %>
-	<%= link_to 'New File', newf_path %>
+<h3><%= link_to 'New Folder', '/createfolder' %>
+	<%= link_to 'New File', new_file_path %>
 </h3>

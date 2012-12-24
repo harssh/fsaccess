@@ -1,159 +1,139 @@
 class FoldersController < ApplicationController
   
   #Errno::EACCES in FoldersController#new 
+  #Errno::ENOTEMPTY in FoldersController#deldir 
+    
   rescue_from Errno::EACCES, :with => :error_render_method
-
+  rescue_from  Errno::ENOTEMPTY , :with => :error_render_method2
+ rescue_from Errno::ENOENT, :with => :error_render_method3
+ 
+   
   def error_render_method
-    respond_to do |type|
-    
-      type.all  { render :action => 'nf' }
-      flash[:error] = 'Access Denied Pls Change Path.'
-    end
-    true
-  end
-  
-  
-  def index
-   
-      if params[:q] 
-    @files =  Dir["#{params[:q]}"+"/*"]
-    render '_form'
-  end
-    
-  end
-
-  # GET /folders/1
-  # GET /folders/1.json
-  def show
-   
-     @files =  Dir[:folder]
-      @p = :q     
-   flash[:notice] = "notice"
-     @files =  Dir["#{@p}"]  
- 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @folder }
-    end
-  end
-
-  # GET /folders/new
-  # GET /folders/new.json
-  def new
-   # @folder = Folder.new
-
- if params[:q] 
- 
-  if FileUtils.mkdir_p("#{params[:q]}")
-        render '_nform'
-        flash[:error] = "Folder Created"
-     end
-     
- end
-  
-  end
-
-  # GET /folders/1/edit
-  def edit
-    @folder = Folder.find(params[:id])
-  end
-
-  # POST /folders
-  # POST /folders.json
-  def create
-    
-        if params[:q] 
-          FileUtils.mkdir_p("#{params[:q]}")
-        end
-     #@files =  Dir["#{params[:q]}"]
-     flash[:success] = "Folder Created"
-    render '_nform' 
-    
-      end
-
-  # PUT /folders/1
-  # PUT /folders/1.json
-  def update
-    @folder = Folder.find(params[:id])
-
-    respond_to do |format|
-      if @folder.update_attributes(params[:folder])
-        format.html { redirect_to @folder, notice: 'Folder was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @folder.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /folders/1
-  # DELETE /folders/1.json
-  def destroy
-   
-  end
-  
-  def path
         
-     @p = :q     
-   flash[:notice] = "notice"
-     @files =  Dir["#{@p}"]  
- 
- 
+      render :action => 'new_folder' 
+      flash[:error] = 'Access Denied Pls Change Path.'
+      
   end
   
-  
-  def nf
-       respond_to do |format|
-       format.html # nf.html.erb
-       format.json { render json: @folder }
-    end
+  def error_render_method2
+
     
+    flash[:error] = 'Folder Contails sub Folder or files.'
+       redirect_to :back 
+      flash[:error] = 'Folder Contains sub Folder or files.'
+   
   end
+
+def error_render_method3   
+           render :action => 'createfolder' 
+            
+   end
   
   
-  def deld
     
-    FileUtils.rm_rf(params[:fid])
-    
-    
-  end
-  
-  def renam
-    
-    pat = params[:q].slice(0..(params[:q].index('/')))
-    
-    FileUtils.mv(params[:q],pat + params[:rn])
-    
-  end
-  
-  def newf
-    
-    if params[:q] 
-  if FileUtils.touch("#{params[:q]}")
-        render '_newfil'
-        flash[:error] = "Folder Created"
+  def index  #listing from given path
+   @fpath = params[:fpath]
      
+     if @fpath
+       
+      @files =  Dir[ "#{@fpath}"+"/*"]    
+      render '_form'
+    else
+      flash[:error] = "Invalid Path"
+      render 'index'
+      
+    end
+   
+  end
+    
+  
+  def createfolder #calls new folder name input page
+ @f_path =params[:fpath]
+ 
+     if FileUtils.mkdir_p("#{@f_path}")
+        render '_nform'
+        flash[:success] = "Folder Created"
+        
+    else 
+       flash[:error] = "Folder notCreated"
+        render 'new'
+     end
+      
+  end
+
+ 
+  def deldir #delete directory
+         
+   if Dir.rmdir(params[:fname])
+     flash[:success] = "Deleted Successful"
+      redirect_to :back
+   else
+     flash[:error] = "Folder Contains sub Folder or files."
+     redirect_to :back
+   end
+   
+    
+    
+  end
+  
+  def rename #rename 
+    
+    pat = params[:fpath].slice(0..(params[:fpath].index('/')))
+    
+   if FileUtils.mv(params[:fpath],pat + params[:newname])
+    flash[:notice] = "Rename Successfull"
+    redirect_to :back
+    else
+     flash[:notice] = "Invalid Name"
+    redirect_to :back 
+    end
+  end
+  
+ 
+ 
+  def new_file # create new file
+    
+    if params[:fpath] 
+      
+     FileUtils.touch("#{params[:fpath]}")
+     flash[:notice] = "New File Created Successfully"
+     render '_newfile'
+    
+     else
+       flash[:notice] = "New File Not Created"
+       render 'new_file'
+       
+    end
+  end
+  
+  def subfolderlist # listing for subfolder
+    
+     if params[:fpath] 
+        @files =  Dir["#{params[:fpath]}"+"/*"]
+        render '_form'
+             
+     else     
+       redirect_to :back    
+    
+     end
+  end
+ 
+  
+  def open_file #method called when file is opened
+   
  end
-  end
-  end
-  
-  def subflist
-    
-   if params[:q] 
-    @files =  Dir["#{params[:q]}"+"/*"]
-    render '_sfsorm'
-    #redirect_to
-  end
-  end
  
-  def subf
-    
-    @files =  Dir["#{params[:q]}"]
- 
-  end
-  
- def opfile
+ def deletefile # delete file
+   @f_name = params[:fname]
+   
+   if FileUtils.rm(@f_name)
+     
+     flash[:success] = "Deleted Successful"
+      redirect_to :back
+   else
+     flash[:error] = "Folder Contains sub Folder or files."
+     redirect_to :back
+   end
    
  end
  

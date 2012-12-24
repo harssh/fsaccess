@@ -1,17 +1,19 @@
 Filesys::Application.routes.draw do
+  
   resources :buckets
 
- match '/path' , to: 'folders#path' 
-  match '/nf',    to: 'folders#nf'
-  match '/subflist', to: 'folders#subflist'
-  match '/deld', to: 'folders#deld'
-  match '/renam', to: 'folders#renam'
+ 
+  match '/createfolder',    to: 'folders#createfolder'
+  match '/subfolderlist', to: 'folders#subfolderlist'
+  match '/deldir', to: 'folders#deldir'
+  match '/rename', to: 'folders#rename'
+  match '/deletefile', to: 'folders#deletefile'
+  match '/new_file', to: 'folders#new_file'
   
-  match '/newf', to: 'folders#newf'
+  match '/open_file', to: 'folders#open_file'
   
-  match '/opfile', to: 'folders#opfile'
   
- resources :folders , only: [:new, :create, :destroy,:index,:show,:nf]
+ resources :folders , only: [:new, :create, :destroy,:index]
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
