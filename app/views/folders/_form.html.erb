@@ -38,13 +38,13 @@
     <td><%= file %></td>
    
    
-   <td><%= form_tag open_file_path   do %>
+   <td><%= form_tag open_file1_path   do %>
  	
     <%= hidden_field_tag(:flpath,file) %>    
     <%= submit_tag("Open", :name => nil) %>
     <% end %></td>
     
-    <td> <%= button_to "Delete File", {:controller => "folders", :action => 'deletefile', :fname => file }, :confirm => "Are you sure ?", :method => :delete %> </td>
+    <td> <%= button_to "Delete File", {:controller => "files", :action => 'deletefile1', :fname => file }, :confirm => "Are you sure ?", :method => :delete %> </td>
     
     <td><%= form_tag rename_path   do %>
  	
@@ -61,5 +61,5 @@
 </div>
 
 <h3><%= link_to 'New Folder', '/createfolder' %>
-	<%= link_to 'New File', new_file_path %>
+	<%= link_to 'New File', new_file1_path %>
 </h3>

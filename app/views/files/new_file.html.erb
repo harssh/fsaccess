@@ -1,0 +1,17 @@
+
+
+
+
+<h2>Enter new file path and name</h2>
+
+<%= form_tag :controller => "folders", :action => 'new_file'  do %>
+    
+    <%= text_field_tag(:fpath,params[:fpath]) %>
+    <%= submit_tag("Submit", :name => nil) %>
+    <% end %>
+
+
+</div>
+
+
+<%= link_to 'Back', folders_path %>
