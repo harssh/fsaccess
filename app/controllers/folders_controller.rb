@@ -5,7 +5,7 @@ class FoldersController < ApplicationController
 
   def error_render_method
     respond_to do |type|
-    # type.html { render :json => "Access Denied" }
+    
       type.all  { render :action => 'nf' }
       flash[:error] = 'Access Denied Pls Change Path.'
     end
@@ -25,7 +25,7 @@ class FoldersController < ApplicationController
   # GET /folders/1
   # GET /folders/1.json
   def show
-    #@folder = Folder.find(params[:id])
+   
      @files =  Dir[:folder]
       @p = :q     
    flash[:notice] = "notice"
@@ -43,26 +43,14 @@ class FoldersController < ApplicationController
    # @folder = Folder.new
 
  if params[:q] 
- # begin
+ 
   if FileUtils.mkdir_p("#{params[:q]}")
         render '_nform'
         flash[:error] = "Folder Created"
-        
-  #    else
-        
-   #     format.html { redirect_to nf_path, notice: 'Folder was successfully updated.' }
-    #    format.json { render json: @folder.errors, status: :unprocessable_entity }
-      
      end
-     #  rescue   
-      #   render :action => 'nf' 
-      #flash[:error] = 'Access Denied Pls Change Path.'
-      #end
+     
  end
-   # respond_to do |format|
-    #  format.html # new.html.erb
-     # format.json { render json: @folder }
-    #end
+  
   end
 
   # GET /folders/1/edit
@@ -73,9 +61,7 @@ class FoldersController < ApplicationController
   # POST /folders
   # POST /folders.json
   def create
-    #@folder = Folder.new(params[:folder])
-     
-    # @files =  Dir[:folder]
+    
         if params[:q] 
           FileUtils.mkdir_p("#{params[:q]}")
         end
@@ -104,11 +90,6 @@ class FoldersController < ApplicationController
   # DELETE /folders/1
   # DELETE /folders/1.json
   def destroy
-#    @folder = Folder.find(params[:id])
- #   @folder.destroy
-
-      
-
    
   end
   
@@ -124,11 +105,12 @@ class FoldersController < ApplicationController
   
   def nf
        respond_to do |format|
-     format.html # nf.html.erb
-      format.json { render json: @folder }
+       format.html # nf.html.erb
+       format.json { render json: @folder }
     end
     
   end
+  
   
   def deld
     
@@ -166,11 +148,13 @@ class FoldersController < ApplicationController
   end
  
   def subf
-     #if params[:q] 
+    
     @files =  Dir["#{params[:q]}"]
- # end
+ 
   end
   
- 
+ def opfile
+   
+ end
  
 end

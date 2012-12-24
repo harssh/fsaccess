@@ -9,6 +9,8 @@ Filesys::Application.routes.draw do
   
   match '/newf', to: 'folders#newf'
   
+  match '/opfile', to: 'folders#opfile'
+  
  resources :folders , only: [:new, :create, :destroy,:index,:show,:nf]
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -14,7 +14,7 @@
   	<% if File.directory?(file)%>
   	<td><%= file %></td>
   
-  <td> <%= button_to "Open Folder", {:controller => "folders", :action => 'subflist', :q => file } , :method => 'get' %> </td>
+  <td> <%= button_to "Open Folder", {:controller => "folders", :action => 'subflist', :q => file }  %> </td>
   
  <td> <%= button_to "Delete Folder", {:controller => "folders", :action => 'deld', :fid => file }, :confirm => "Are you sure ?", :method => :delete %> </td>
   
@@ -27,8 +27,19 @@
 
   	<% else %>
     <td><%= file %></td>
-    <td><%= link_to 'Open', file[/\/.*/] %></td>
+   <td><%= form_tag opfile_path   do %>
+ 	
+    <%= hidden_field_tag(:x,file) %>
+    
+    <%= submit_tag("Open", :name => nil) %>
+    <% end %></td>
     <td> <%= button_to "Delete File", {:controller => "folders", :action => 'deld', :fid => file }, :confirm => "Are you sure ?", :method => :delete %> </td>
+    <td><%= form_tag renam_path   do %>
+ 	
+    <%= hidden_field_tag(:q,file) %>
+    <%= text_field_tag(:rn) %>
+    <%= submit_tag("Renam", :name => nil,:confirm => "Are you sure ?") %>
+    <% end %></td>
     <% end %>
   </tr>
 <% end %>
