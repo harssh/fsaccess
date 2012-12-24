@@ -1,6 +1,22 @@
 class FilesController < ApplicationController
   
+  rescue_from Errno::EACCES, :with => :error_render_method
+  rescue_from Errno::ENOENT, :with => :error_render_method3
+ 
+   
+  def error_render_method
+        
+      render :action => 'new_folder' 
+      flash[:error] = 'Access Denied Pls Change Path.'
+      
+  end
   
+  
+  def error_render_method3   
+           render :action => 'createfolder' 
+           
+   end
+    
    def new_file1 # create new file
      @fpath = params[:fpath]
      
