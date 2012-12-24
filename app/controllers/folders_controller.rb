@@ -24,12 +24,11 @@ class FoldersController < ApplicationController
    
   end
 
-def error_render_method3   
+  def error_render_method3   
            render :action => 'createfolder' 
-            
+           
    end
-  
-  
+    
     
   def index  #listing from given path
    @fpath = params[:fpath]
@@ -45,6 +44,20 @@ def error_render_method3
     end
    
   end
+  
+   # def subfolderlist # listing for subfolder
+     # @fpath = params[:fpath]
+#      
+     # if @fpath
+#      
+        # @files =  Dir["#{@fpath}"+"/*"]
+        # render '_form'
+#              
+     # else     
+       # redirect_to :back    
+#     
+     # end
+  # end
     
   
   def createfolder #calls new folder name input page
@@ -63,8 +76,9 @@ def error_render_method3
 
  
   def deldir #delete directory
+         @f_name = params[:fname]
          
-   if Dir.rmdir(params[:fname])
+   if Dir.rmdir(@f_name)
      flash[:success] = "Deleted Successful"
       redirect_to :back
    else
@@ -89,13 +103,14 @@ def error_render_method3
     end
   end
   
- 
- 
+  
   def new_file # create new file
+     @fpath = params[:fpath]
+     
+     if @fpath
     
-    if params[:fpath] 
       
-     FileUtils.touch("#{params[:fpath]}")
+     FileUtils.touch("#{@fpath}")
      flash[:notice] = "New File Created Successfully"
      render '_newfile'
     
@@ -106,17 +121,7 @@ def error_render_method3
     end
   end
   
-  def subfolderlist # listing for subfolder
-    
-     if params[:fpath] 
-        @files =  Dir["#{params[:fpath]}"+"/*"]
-        render '_form'
-             
-     else     
-       redirect_to :back    
-    
-     end
-  end
+ 
  
   
   def open_file #method called when file is opened

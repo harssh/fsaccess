@@ -4,7 +4,7 @@ Filesys::Application.routes.draw do
 
  
   match '/createfolder',    to: 'folders#createfolder'
-  match '/subfolderlist', to: 'folders#subfolderlist'
+ # match '/subfolderlist', to: 'folders#subfolderlist'
   match '/deldir', to: 'folders#deldir'
   match '/rename', to: 'folders#rename'
   match '/deletefile', to: 'folders#deletefile'

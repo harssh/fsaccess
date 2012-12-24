@@ -18,7 +18,12 @@
   	<% if File.directory?(file)%>
   	<td><%= file %></td>
   
-  <td> <%= button_to "Open Folder", {:controller => "folders", :action => 'subfolderlist', :fpath => file }  %> </td>
+  <td> <%= form_tag folders_path , :method => 'get'   do %>
+ 	
+    <%= hidden_field_tag(:fpath,file) %>
+    
+    <%= submit_tag("Open Folder", :name => nil) %>
+    <% end %></td>
   
  <td> <%= button_to "Delete Folder", {:controller => "folders", :action => 'deldir', :fname => file }, :confirm => "Are you sure ?", :method => :delete %> </td>
   
