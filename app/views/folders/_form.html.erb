@@ -18,7 +18,7 @@
   	<% if File.directory?(file)%>
   	<td><%= file %></td>
   
-  <td> <%= form_tag folders_path , :method => 'get'   do %>
+  <td> <%= form_tag showf_path , :method => 'get'   do %>
  	
     <%= hidden_field_tag(:fpath,file) %>
     
@@ -60,6 +60,6 @@
 <br />
 </div>
 
-<h3><%= link_to 'New Folder', createfolder_path %>
+<h3><%= link_to 'New Folder', new_path %>
 	<%= link_to 'New File', create_path %>
 </h3>

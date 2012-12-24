@@ -5,7 +5,7 @@ class FoldersController < ApplicationController
     
   rescue_from Errno::EACCES, :with => :error_render_method
   rescue_from  Errno::ENOTEMPTY , :with => :error_render_method2
- rescue_from Errno::ENOENT, :with => :error_render_method3
+  rescue_from Errno::ENOENT, :with => :error_render_method3
  
    
   def error_render_method
@@ -29,8 +29,9 @@ class FoldersController < ApplicationController
            
    end
     
+   
     
-  def index  #listing from given path
+  def show  #listing from given path
    @fpath = params[:fpath]
      
      if @fpath
@@ -39,15 +40,14 @@ class FoldersController < ApplicationController
       render '_form'
     else
       flash[:error] = "Invalid Path"
-      render 'index'
+      render 'show'
       
     end
    
   end
   
-  
-  
-  def createfolder #calls new folder name input page
+    
+  def new #calls new folder name input page
  @f_path =params[:fpath]
  
      if FileUtils.mkdir_p("#{@f_path}")

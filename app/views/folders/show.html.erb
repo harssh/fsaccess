@@ -1,33 +1,17 @@
-<p id="notice"><%= notice %></p>
+<h1><%= flash[:notice] %></h1>
+<h1>Listing folders</h1>
 
-<p>
-  <b>Name:</b>
-  <%= @folder.name %>
-</p>
-<table>
-  <tr>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
-   <div class="list">
-  <% @files.each do |file| %>
-  <tr>
-  	<% if File.directory?(file)%>
-  	<td><%= file %></td>
-  <td><%= link_to 'Open Folder', file[/\/.*/] %></td>
-  	<% else %>
-    <td><%= file %></td>
-    <td><%= link_to 'Open', file[/\/.*/] %></td>
+<div>
+<%= form_tag showf_path , :method => 'get'  do %>    
+    <%= text_field_tag(:fpath,params[:fpath]) %>
+    <%= submit_tag("Submit Path", :name => nil) %>
     <% end %>
-  </tr>
-<% end %>
-</table>
 
-<br />
+
 </div>
 
 
-<%= link_to 'Edit', edit_folder_path(@folder) %> |
-<%= link_to 'Back', folders_path %>
+<!-- <div class="new_folder">
+<h3><%= link_to 'New Folder', new_folder_path %>
+</h3> -->
+</div>

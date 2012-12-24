@@ -13,11 +13,11 @@ class FilesController < ApplicationController
   
   
   def error_render_method3   
-           render :action => 'createfolder' 
+           render :action => 'new' 
            
    end
     
-   def create # create new file
+  def create # create new file
      @fpath = params[:fpath]
      
      if @fpath
@@ -34,13 +34,12 @@ class FilesController < ApplicationController
     end
   end
    
-  
-  
- def show #method called when file is opened
+   
+  def show #method called when file is opened
    
  end
  
- def delete # delete file
+  def delete # delete file
    @f_name = params[:fname]
    
    if FileUtils.rm(@f_name)

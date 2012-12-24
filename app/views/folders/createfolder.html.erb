@@ -5,7 +5,7 @@
 
 <h2>Enter new folder path and name</h2>
 
-<%= form_tag :controller => "folders", :action => 'createfolder'  do %>
+<%= form_tag :controller => "folders", :action => 'new'  do %>
     
     <%= text_field_tag(:fpath,params[:fpath]) %>
     <%= submit_tag("Submit", :name => nil) %>

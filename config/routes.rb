@@ -5,22 +5,18 @@ Filesys::Application.routes.draw do
   
   
   
- 
-  match '/createfolder',    to: 'folders#createfolder'
- # match '/subfolderlist', to: 'folders#subfolderlist'
+ match '/showf', to: 'folders#show'
+  match '/new', to: 'folders#new'
+  
   match '/deldir', to: 'folders#delete'
   match '/rename', to: 'folders#rename'
   match '/deletefile', to: 'folders#deletefile'
   match '/new_file', to: 'folders#new_file'
-  
- 
-  
-   match '/delete', to: 'files#delete'
+  match '/delete', to: 'files#delete'
   match '/create', to: 'files#create'
-  
   match '/show', to: 'files#show'
   
- resources :folders , only: [:new, :destroy,:index]
+ 
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
@@ -70,7 +66,8 @@ Filesys::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-    root :to => 'folders#index'
+   
+    root :to => 'folders#show'
 
   # See how all your routes lay out with "rake routes"
 
